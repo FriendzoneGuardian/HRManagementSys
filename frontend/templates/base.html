@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HR Management System</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+    </head>
+
+<body>
+    <nav class="bg-white shadow px-8 py-4 flex justify-between items-center">
+        <a href="{{ url_for('main.dashboard') }}" class="text-2xl font-bold text-indigo-600 no-underline">HR Manager</a>
+        <div>
+            <!-- Add user menu here if needed -->
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto my-8 px-4">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+</html>

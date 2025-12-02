@@ -1,5 +1,5 @@
 from app import create_app, db
-from app.models import Employee, Department
+from app.models import Candidate, Department
 from datetime import datetime
 import random
 
@@ -13,13 +13,10 @@ def populate():
     db_url = Config.SQLALCHEMY_DATABASE_URI
     if 'mysql' in db_url:
         try:
-            # Parse connection details (simplified for this specific case)
-            # Assumes format: mysql+pymysql://user:pass@host:port/dbname
             from sqlalchemy.engine.url import make_url
             url = make_url(db_url)
             db_name = url.database
             
-            # Connect without database selected
             conn = pymysql.connect(
                 host=url.host,
                 user=url.username,
@@ -34,13 +31,17 @@ def populate():
             print(f"Error creating database: {e}")
 
     with app.app_context():
-        # Create tables
-        db.create_all()
+        # Drop legacy 'employee' table if it exists (to fix FK constraints)
+        try:
+            db.session.execute(db.text("DROP TABLE IF EXISTS employee"))
+            db.session.commit()
+            print("Dropped legacy 'employee' table.")
+        except Exception as e:
+            print(f"Warning: Could not drop 'employee' table: {e}")
 
-        # Check if data already exists
-        if Department.query.first():
-            print("Database already populated.")
-            return
+        # Drop all tables to reset schema
+        db.drop_all()
+        db.create_all()
 
         # Create Departments
         departments = ['HR', 'Engineering', 'Sales', 'Marketing', 'Finance']
@@ -52,26 +53,28 @@ def populate():
         
         db.session.commit()
 
-        # Create Employees
+        # Create Candidates
         positions = ['Manager', 'Developer', 'Analyst', 'Specialist', 'Director']
         first_names = ['John', 'Jane', 'Alice', 'Bob', 'Charlie', 'Diana', 'Evan', 'Fiona']
         last_names = ['Doe', 'Smith', 'Johnson', 'Brown', 'Davis', 'Miller', 'Wilson', 'Moore']
+        statuses = ['Applied', 'Interviewing', 'Offer', 'Rejected']
 
         for i in range(20):
             dept = random.choice(dept_objects)
-            emp = Employee(
+            cand = Candidate(
                 first_name=random.choice(first_names),
                 last_name=random.choice(last_names),
-                email=f'employee{i}@example.com',
+                email=f'candidate{i}@example.com',
                 position=random.choice(positions),
-                salary=random.randint(50000, 150000),
+                expected_salary=random.randint(50000, 150000),
                 department=dept,
-                hire_date=datetime.now()
+                application_date=datetime.now(),
+                status=random.choice(statuses)
             )
-            db.session.add(emp)
+            db.session.add(cand)
         
         db.session.commit()
-        print("Database populated successfully!")
+        print("Database populated with Candidates successfully!")
 
 if __name__ == '__main__':
     populate()

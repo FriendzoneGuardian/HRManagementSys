@@ -25,21 +25,6 @@ We are currently in the **Development Phase** under the Waterfall Model. Plannin
 
 ### **Frontend**
 
-* **Styling:** Tailwind CSS
-
----
-
-## 🎯 Core Features
-
-1. Employee Records Management
-2. Leave Management Workflow
-3. Attendance Tracking Module
-4. Role-Based Access Controls (RBAC)
-5. Department & Position Structuring
-6. HR Activity Logging
-7. Dashboard Overview for Admin
-8. Integrated Search & Filters
-9. Modular API Endpoints
 10. Clean UI powered by Tailwind
 
 ---

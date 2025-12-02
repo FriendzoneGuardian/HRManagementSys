@@ -4,7 +4,7 @@
 
 ## Overview
 
-Project Horus is a modernized Human Resource Management System (HRMS) designed to demonstrate an academically grounded yet forward‑oriented system architecture. Unlike production-grade corporate HR suites, Project Horus focuses on modularity, clarity, and demonstrability — allowing instructors to easily evaluate the system’s structure, logic, and technical implementation.
+Project Horus is a modernized Recruitment Management System (RMS) designed to demonstrate an academically grounded yet forward‑oriented system architecture. Unlike production-grade corporate HR suites, Project Horus focuses on the hiring lifecycle, modularity, clarity, and demonstrability — allowing instructors to easily evaluate the system’s structure, logic, and technical implementation.
 
 This project is fully **independent** and not part of SwiftSynapse Labs or SwiftGrade.
 
@@ -25,7 +25,16 @@ We are currently in the **Development Phase** under the Waterfall Model. Plannin
 
 ### **Frontend**
 
-10. Clean UI powered by Tailwind
+* **Styling:** Tailwind CSS
+
+---
+
+## 🎯 Core Features
+
+1.  **Dashboard Overview**: Key metrics and recent applications.
+2.  **Candidate Management**: Track applicants and their status.
+3.  **Job Applications**: (Coming Soon)
+4.  **Interview Scheduling**: (Coming Soon)
 
 ---
 
@@ -44,6 +53,8 @@ project-horus/
 │   └── populate_db.py
 │
 ├── frontend/
+│   ├── src/
+│   │   └── input.css
 │   ├── templates/
 │   ├── static/
 │   ├── package.json
@@ -80,14 +91,15 @@ pip install -r requirements.txt
 ### 4. Initialize Tailwind
 
 ```
+cd frontend
 npm install
-npx tailwindcss -i ./input.css -o ./static/css/output.css --watch
+npx tailwindcss -i ./src/input.css -o ./static/css/output.css --watch
 ```
 
 ### 5. Run Flask
 
 ```
-python app.py
+python backend/run.py
 ```
 
 ---
@@ -96,7 +108,7 @@ python app.py
 
 Project Horus aims to:
 
-* Provide an academically demonstrable HRMS.
+* Provide an academically demonstrable Recruitment System.
 * Show proper design, modularity, and documentation.
 * Maintain clarity and evaluability for instructors.
 * Incorporate modern design conventions.

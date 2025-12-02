@@ -18,15 +18,14 @@ We are currently in the **Development Phase** under the Waterfall Model. Plannin
 
 ## 🏗️ Tech Stack
 
-### **Backend Options (Final + Failover)**
+### **Backend**
 
 * **Primary:** Flask (Python)
+* **Database:** MySQL (via XAMPP)
+
+### **Frontend**
+
 * **Styling:** Tailwind CSS
-* **Emergency/Plan B:** Django (Python)
-
-### **Database**
-
-* **PostgreSQL** (Primary recommended — performance + reliability)
 
 ---
 
@@ -45,24 +44,25 @@ We are currently in the **Development Phase** under the Waterfall Model. Plannin
 
 ---
 
-## 📁 Project Structure (Tentative)
+## 📁 Project Structure
 
 ```
 project-horus/
 │
 ├── backend/
-│   ├── app.py (Flask main entry)
-│   ├── routes/
-│   ├── models/
-│   └── services/
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   └── routes.py
+│   ├── config.py
+│   ├── run.py
+│   └── populate_db.py
 │
 ├── frontend/
-│   ├── tailwind.config.js
 │   ├── templates/
-│   └── static/
-│
-├── database/
-│   └── migrations/
+│   ├── static/
+│   ├── package.json
+│   └── tailwind.config.js
 │
 └── README.md
 ```
@@ -74,8 +74,8 @@ project-horus/
 ### 1. Clone Repository
 
 ```
-git clone https://github.com/your-username/project-horus.git
-cd project-horus
+git clone https://github.com/FriendzoneGuardian/HRManagementSys.git
+cd HRManagementSys
 ```
 
 ### 2. Create Virtual Environment

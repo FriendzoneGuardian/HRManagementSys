@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-header mb-8">
+    <h1 class="text-3xl font-bold text-gray-800">Hiring Dashboard</h1>
+    <p class="text-gray-500">Overview of Recruitment Pipeline</p>
+</div>
+
+<div class="stats-grid grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="stat-card bg-white rounded-lg p-6 shadow hover:-translate-y-0.5 transition-transform">
+        <div class="stat-title text-sm font-medium text-gray-500 mb-2">Total Candidates</div>
+        <div class="stat-value text-3xl font-bold text-gray-800">{{ candidate_count }}</div>
+    </div>
+    <div class="stat-card bg-white rounded-lg p-6 shadow hover:-translate-y-0.5 transition-transform">
+        <div class="stat-title text-sm font-medium text-gray-500 mb-2">Departments</div>
+        <div class="stat-value text-3xl font-bold text-gray-800">{{ department_count }}</div>
+    </div>
+    <div class="stat-card bg-white rounded-lg p-6 shadow hover:-translate-y-0.5 transition-transform">
+        <div class="stat-title text-sm font-medium text-gray-500 mb-2">Avg. Expected Salary</div>
+        <div class="stat-value text-3xl font-bold text-gray-800">${{ "%.2f"|format(avg_salary) }}</div>
+    </div>
+</div>
+
+<div class="recent-employees bg-white rounded-lg p-6 shadow">
+    <h2 class="text-xl font-semibold mb-4">Recent Applications</h2>
+    <table class="w-full border-collapse">
+        <thead>
+            <tr>
+                <th
+                    class="px-4 py-3 text-left border-b border-gray-200 text-xs font-semibold uppercase text-gray-500 tracking-wider">
+                    Name</th>
+                <th
+                    class="px-4 py-3 text-left border-b border-gray-200 text-xs font-semibold uppercase text-gray-500 tracking-wider">
+                    Position</th>
+                <th
+                    class="px-4 py-3 text-left border-b border-gray-200 text-xs font-semibold uppercase text-gray-500 tracking-wider">
+                    Department</th>
+                <th
+                    class="px-4 py-3 text-left border-b border-gray-200 text-xs font-semibold uppercase text-gray-500 tracking-wider">
+                    Applied Date</th>
+                <th
+                    class="px-4 py-3 text-left border-b border-gray-200 text-xs font-semibold uppercase text-gray-500 tracking-wider">
+                    Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidate in recent_candidates %}
+            <tr>
+                <td class="px-4 py-3 text-left border-b border-gray-200">{{ candidate.first_name }} {{
+                    candidate.last_name }}</td>
+                <td class="px-4 py-3 text-left border-b border-gray-200">{{ candidate.position }}</td>
+                <td class="px-4 py-3 text-left border-b border-gray-200">{{ candidate.department.name }}</td>
+                <td class="px-4 py-3 text-left border-b border-gray-200">{{
+                    candidate.application_date.strftime('%Y-%m-%d') }}</td>
+                <td class="px-4 py-3 text-left border-b border-gray-200">
+                    <span class="badge inline-flex items-center px-3 py-1 rounded-full text-xs font-medium 
+                        {% if candidate.status == 'Applied' %} badge-success bg-blue-100 text-blue-800
+                        {% elif candidate.status == 'Interviewing' %} badge-warning bg-yellow-100 text-yellow-800
+                        {% elif candidate.status == 'Offer' %} badge-success bg-green-100 text-green-800
+                        {% else %} bg-gray-100 text-gray-800 {% endif %}">
+                        {{ candidate.status }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

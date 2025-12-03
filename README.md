@@ -4,9 +4,7 @@
 
 ## Overview
 
-Project Horus is a modernized Human Resource Management System (HRMS) designed to demonstrate an academically grounded yet forward‑oriented system architecture. Unlike production-grade corporate HR suites, Project Horus focuses on modularity, clarity, and demonstrability — allowing instructors to easily evaluate the system’s structure, logic, and technical implementation.
-
-This project is fully **independent** and not part of SwiftSynapse Labs or SwiftGrade.
+Project Horus is a modernized Recruitment Management System (RMS) designed to demonstrate an academically grounded yet forward‑oriented system architecture. Unlike production-grade corporate HR suites, Project Horus focuses on the hiring lifecycle, modularity, clarity, and demonstrability — allowing instructors to easily evaluate the system’s structure, logic, and technical implementation.
 
 ---
 
@@ -18,51 +16,47 @@ We are currently in the **Development Phase** under the Waterfall Model. Plannin
 
 ## 🏗️ Tech Stack
 
-### **Backend Options (Final + Failover)**
+### **Backend**
 
 * **Primary:** Flask (Python)
+* **Database:** MySQL (via XAMPP)
+
+### **Frontend**
+
 * **Styling:** Tailwind CSS
-* **Emergency/Plan B:** Django (Python)
-
-### **Database**
-
-* **PostgreSQL** (Primary recommended — performance + reliability)
 
 ---
 
 ## 🎯 Core Features
 
-1. Employee Records Management
-2. Leave Management Workflow
-3. Attendance Tracking Module
-4. Role-Based Access Controls (RBAC)
-5. Department & Position Structuring
-6. HR Activity Logging
-7. Dashboard Overview for Admin
-8. Integrated Search & Filters
-9. Modular API Endpoints
-10. Clean UI powered by Tailwind
+1.  **Dashboard Overview**: Key metrics and recent applications.
+2.  **Candidate Management**: Track applicants and their status.
+3.  **Job Applications**: (Coming Soon)
+4.  **Interview Scheduling**: (Coming Soon)
 
 ---
 
-## 📁 Project Structure (Tentative)
+## 📁 Project Structure
 
 ```
 project-horus/
 │
 ├── backend/
-│   ├── app.py (Flask main entry)
-│   ├── routes/
-│   ├── models/
-│   └── services/
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   └── routes.py
+│   ├── config.py
+│   ├── run.py
+│   └── populate_db.py
 │
 ├── frontend/
-│   ├── tailwind.config.js
+│   ├── src/
+│   │   └── input.css
 │   ├── templates/
-│   └── static/
-│
-├── database/
-│   └── migrations/
+│   ├── static/
+│   ├── package.json
+│   └── tailwind.config.js
 │
 └── README.md
 ```
@@ -74,8 +68,8 @@ project-horus/
 ### 1. Clone Repository
 
 ```
-git clone https://github.com/your-username/project-horus.git
-cd project-horus
+git clone https://github.com/FriendzoneGuardian/HRManagementSys.git
+cd HRManagementSys
 ```
 
 ### 2. Create Virtual Environment
@@ -95,14 +89,15 @@ pip install -r requirements.txt
 ### 4. Initialize Tailwind
 
 ```
+cd frontend
 npm install
-npx tailwindcss -i ./input.css -o ./static/css/output.css --watch
+npx tailwindcss -i ./src/input.css -o ./static/css/output.css --watch
 ```
 
 ### 5. Run Flask
 
 ```
-python app.py
+python backend/run.py
 ```
 
 ---
@@ -111,7 +106,7 @@ python app.py
 
 Project Horus aims to:
 
-* Provide an academically demonstrable HRMS.
+* Provide an academically demonstrable Recruitment System.
 * Show proper design, modularity, and documentation.
 * Maintain clarity and evaluability for instructors.
 * Incorporate modern design conventions.

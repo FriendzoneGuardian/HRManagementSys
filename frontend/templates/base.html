@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Plan B: Retro Fallback Styles (Pre-HTML5 Look) */
+        /* These styles will be overridden by Tailwind (Plan A) if it loads correctly */
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .navbar {
+            border-bottom: 2px solid #000000;
+            padding: 10px;
+            background-color: #eeeeee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000080;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            border: 1px solid #000000;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            border-bottom: 1px solid #000000;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            border: 2px solid #000000;
+            padding: 15px;
+            background-color: #f0f0f0;
+            flex: 1;
+        }
+
+        .stat-title {
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+        }
+
+        .recent-employees {
+            border: 2px solid #000000;
+            padding: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #000000;
+        }
+
+        th,
+        td {
+            border: 1px solid #000000;
+            padding: 5px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #cccccc;
+        }
+
+        .badge {
+            border: 1px solid #000000;
+            padding: 2px 5px;
+            font-size: 12px;
+        }
+
+        .badge-success {
+            background-color: #90ee90;
+        }
+
+        /* Light Green */
+        .badge-warning {
+            background-color: #ffffe0;
+        }
+
+        /* Light Yellow */
+    </style>
+
+    <!-- Plan A: Tailwind CSS (Overrides Plan B) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+</head>
+
+<body>
+    <nav class="navbar bg-white shadow px-8 py-4 flex justify-between items-center">
+        <a href="{{ url_for('main.dashboard') }}"
+            class="navbar-brand text-2xl font-bold text-indigo-600 no-underline">HR Manager</a>
+        <div>
+            <!-- Add user menu here if needed -->
+        </div>
+    </nav>
+
+    <div class="container max-w-7xl mx-auto my-8 px-4">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+</html>

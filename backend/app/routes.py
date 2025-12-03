@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import Candidate, Department
 from app import db
+from datetime import datetime
 
 bp = Blueprint('main', __name__)
 
@@ -25,4 +26,67 @@ def dashboard():
 @bp.route('/candidates')
 def candidates():
     candidates = Candidate.query.order_by(Candidate.application_date.desc()).all()
-    return render_template('candidates.html', candidates=candidates)
+    departments = Department.query.all()
+    return render_template('candidates.html', candidates=candidates, departments=departments)
+
+@bp.route('/candidates/add', methods=['POST'])
+def add_candidate():
+    try:
+        department_id = request.form.get('department')
+        department = Department.query.get(department_id)
+        
+        new_candidate = Candidate(
+            first_name=request.form.get('first_name'),
+            last_name=request.form.get('last_name'),
+            email=request.form.get('email'),
+            position=request.form.get('position'),
+            department=department,
+            expected_salary=float(request.form.get('expected_salary')),
+            status=request.form.get('status'),
+            application_date=datetime.now()
+        )
+        
+        db.session.add(new_candidate)
+        db.session.commit()
+        flash('Candidate added successfully!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error adding candidate: {str(e)}', 'error')
+        
+    return redirect(url_for('main.candidates'))
+
+@bp.route('/candidates/<int:id>/edit', methods=['POST'])
+def edit_candidate(id):
+    candidate = Candidate.query.get_or_404(id)
+    try:
+        candidate.first_name = request.form.get('first_name')
+        candidate.last_name = request.form.get('last_name')
+        candidate.email = request.form.get('email')
+        candidate.position = request.form.get('position')
+        candidate.expected_salary = float(request.form.get('expected_salary'))
+        candidate.status = request.form.get('status')
+        
+        department_id = request.form.get('department')
+        if department_id:
+            candidate.department = Department.query.get(department_id)
+            
+        db.session.commit()
+        flash('Candidate updated successfully!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error updating candidate: {str(e)}', 'error')
+        
+    return redirect(url_for('main.candidates'))
+
+@bp.route('/candidates/<int:id>/delete', methods=['POST'])
+def delete_candidate(id):
+    candidate = Candidate.query.get_or_404(id)
+    try:
+        db.session.delete(candidate)
+        db.session.commit()
+        flash('Candidate deleted successfully!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error deleting candidate: {str(e)}', 'error')
+        
+    return redirect(url_for('main.candidates'))

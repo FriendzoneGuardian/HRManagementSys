@@ -23,22 +23,6 @@ We are currently in the **Development Phase** under the Waterfall Model. Plannin
 
 ### **Frontend**
 
-* **Styling:** Tailwind CSS
-
----
-
-## 🎯 Core Features
-
-1.  **Dashboard Overview**: Key metrics and recent applications.
-2.  **Candidate Management**: Track applicants and their status.
-3.  **Job Applications**: (Coming Soon)
-4.  **Interview Scheduling**: (Coming Soon)
-
----
-
-## 📁 Project Structure
-
-```
 project-horus/
 │
 ├── backend/

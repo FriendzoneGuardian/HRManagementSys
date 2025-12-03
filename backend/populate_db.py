@@ -1,5 +1,5 @@
 from app import create_app, db
-from app.models import Candidate, Department
+from app.models import Candidate, Department, User
 from datetime import datetime
 import random
 
@@ -73,8 +73,17 @@ def populate():
             )
             db.session.add(cand)
         
+        # Create Users
+        admin = User(username='admin', role='Admin')
+        admin.set_password('admin123')
+        db.session.add(admin)
+
+        hr = User(username='hr', role='HR')
+        hr.set_password('hr123')
+        db.session.add(hr)
+
         db.session.commit()
-        print("Database populated with Candidates successfully!")
+        print("Database populated with Candidates and Users successfully!")
 
 if __name__ == '__main__':
     populate()

@@ -117,7 +117,6 @@ Django remains on standby as a fallback framework if needed.
 
 ## 📝 Notes
 
-* This project is **independent** from SwiftSynapse Labs.
 * Builds upon academic requirements rather than enterprise production constraints.
 * All architectural decisions and changes are reflected across development logs.
 

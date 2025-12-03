@@ -21,3 +21,8 @@ def dashboard():
                            department_count=department_count,
                            recent_candidates=recent_candidates,
                            avg_salary=avg_salary)
+
+@bp.route('/candidates')
+def candidates():
+    candidates = Candidate.query.order_by(Candidate.application_date.desc()).all()
+    return render_template('candidates.html', candidates=candidates)

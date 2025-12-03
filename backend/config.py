@@ -15,3 +15,10 @@ class Config:
         print("WARNING: DATABASE_URL not set in .env. Using default XAMPP connection.")
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+    # Optimization: Connection Pooling
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'pool_size': 10,
+        'pool_recycle': 3600,
+        'pool_pre_ping': True
+    }

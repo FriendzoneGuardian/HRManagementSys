@@ -74,21 +74,33 @@ def populate():
             db.session.add(cand)
             
             # Create User for Candidate
-            user = User(username=cand.email, role='Applicant', candidate=cand)
+            user = User(username=cand.email, role='Applicant', candidate=cand, is_approved=True)
             user.set_password('password123')
             db.session.add(user)
         
         # Create Users
-        admin = User(username='admin', role='Admin')
+        admin = User(username='admin', role='Admin', is_approved=True)
         admin.set_password('admin123')
         db.session.add(admin)
 
-        hr = User(username='hr', role='HR')
+        hr = User(username='hr', role='HR', is_approved=True)
         hr.set_password('hr123')
         db.session.add(hr)
 
+        # Create Job Postings
+        from app.models import JobPosting
+        jobs = [
+            JobPosting(title='Senior Software Engineer', department=dept_objects[1], requirements='5+ years Python, Flask, React. Experience with AWS.'),
+            JobPosting(title='HR Manager', department=dept_objects[0], requirements='3+ years HR experience. Knowledge of labor laws.'),
+            JobPosting(title='Sales Representative', department=dept_objects[2], requirements='Strong communication skills. Proven track record.'),
+            JobPosting(title='Marketing Specialist', department=dept_objects[3], requirements='SEO, Content Marketing, Social Media.'),
+            JobPosting(title='Financial Analyst', department=dept_objects[4], requirements='CPA, Excel, Financial Modeling.')
+        ]
+        for job in jobs:
+            db.session.add(job)
+
         db.session.commit()
-        print("Database populated with Candidates and Users successfully!")
+        print("Database populated with Candidates, Users, and Job Postings successfully!")
 
 if __name__ == '__main__':
     populate()

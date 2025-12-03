@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
 </head>
 
-{% set theme_color = 'blue' if current_user.role == 'Admin' else 'violet' if current_user.role == 'HR' else 'teal' %}
+{% set theme_color = 'blue' if current_user.role == 'Admin' else 'violet' if current_user.role == 'HR' else 'amber' %}
 
 <body class="font-sans bg-gray-50">
 
@@ -78,6 +78,8 @@
                         <span class="ms-3">Dashboard</span>
                     </a>
                 </li>
+
+                {% if current_user.role != 'Applicant' %}
                 <li>
                     <a href="{{ url_for('main.candidates') }}"
                         class="nav-link border-none flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
@@ -90,20 +92,38 @@
                         <span class="flex-1 ms-3 whitespace-nowrap">Candidates</span>
                     </a>
                 </li>
+                {% endif %}
+
                 {% if current_user.role == 'Admin' %}
                 <li>
                     <a href="{{ url_for('main.audit_logs') }}"
                         class="nav-link border-none flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-{{ theme_color }}-600"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 20 20">
+                            <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
+                            <path
+                                d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z" />
+                            <path
+                                d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .53-.267l8.793-8.794a.96.96 0 0 0 0-1.352l-2.351-2.35a.96.96 0 0 0-1.352 0l-8.792 8.793a.96.96 0 0 0-.267.529l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8 2.351 2.351-1.282 1.282-2.351-2.351 1.282-1.282Z" />
                         </svg>
                         <span class="flex-1 ms-3 whitespace-nowrap">Audit Logs</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ url_for('main.approvals') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                        <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-{{ theme_color }}-600"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="ml-3">Pending Approvals</span>
+                    </a>
+                </li>
                 {% endif %}
+
                 <li>
                     <a href="#"
                         class="nav-link border-none flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group opacity-50 cursor-not-allowed">

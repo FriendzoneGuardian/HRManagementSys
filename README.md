@@ -15,7 +15,7 @@ Unlike production-grade corporate HR suites, Clarion focuses on the hiring lifec
 
 ## 🚀 Current Development Phase
 
-We are currently completing **Phase 5** (Security & Auditing) and preparing for future modules. The system is transitioning from a basic CRUD application to a more robust, secure, and feature-rich platform.
+We have completed **Phase 6** (Applicant Module & System Hardening). The system now includes a full Applicant lifecycle, from registration and document upload to admin approval and status tracking.
 
 ---
 
@@ -114,6 +114,8 @@ python backend/run.py
 4.  **Minimalist Tailwind UI** with Role-Based Theming (Blue for Admin, Violet for HR).
 5.  **Secure Authentication** with Flask-Login and CSRF protection.
 6.  **Audit Logging** for accountability.
+7.  **Applicant Module**: Dedicated dashboard for candidates to view jobs and track status.
+8.  **Approval Workflow**: Admin verification for new account registrations.
 
 ---
 

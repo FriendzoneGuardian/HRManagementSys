@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from app.models import Candidate, Department, AuditLog
+from app.models import Candidate, Department, AuditLog, User
 from app import db
+from sqlalchemy import func
 from datetime import datetime
 
 bp = Blueprint('main', __name__)
@@ -10,14 +11,15 @@ bp = Blueprint('main', __name__)
 @bp.route('/dashboard')
 @login_required
 def dashboard():
+    if current_user.role == 'Applicant':
+        return redirect(url_for('applicant.dashboard'))
+        
     candidate_count = Candidate.query.count()
     department_count = Department.query.count()
     recent_candidates = Candidate.query.order_by(Candidate.application_date.desc()).limit(5).all()
     
-    # Calculate average expected salary
-    candidates = Candidate.query.all()
-    total_salary = sum([c.expected_salary for c in candidates])
-    avg_salary = total_salary / candidate_count if candidate_count > 0 else 0
+    # Optimization: Calculate average salary in DB
+    avg_salary = db.session.query(func.avg(Candidate.expected_salary)).scalar() or 0
 
     return render_template('dashboard.html', 
                            candidate_count=candidate_count, 
@@ -128,3 +130,29 @@ def audit_logs():
         
     logs = AuditLog.query.order_by(AuditLog.timestamp.desc()).all()
     return render_template('audit_logs.html', logs=logs)
+
+@bp.route('/admin/approvals', methods=['GET', 'POST'])
+@login_required
+def approvals():
+    if current_user.role != 'Admin':
+        flash('Permission denied.', 'error')
+        return redirect(url_for('main.dashboard'))
+        
+    if request.method == 'POST':
+        user_id = request.form.get('user_id')
+        action = request.form.get('action')
+        user = User.query.get(user_id)
+        
+        if user:
+            if action == 'approve':
+                user.is_approved = True
+                flash(f'User {user.username} approved.', 'success')
+                log_user_action('APPROVE_USER', f"Approved user {user.username}")
+            elif action == 'reject':
+                db.session.delete(user)
+                flash(f'User {user.username} rejected and deleted.', 'warning')
+                log_user_action('REJECT_USER', f"Rejected user {user.username}")
+            db.session.commit()
+            
+    pending_users = User.query.filter_by(is_approved=False).all()
+    return render_template('approvals.html', users=pending_users)

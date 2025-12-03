@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
 </head>
 
-{% set theme_color = 'blue' if current_user.role == 'Admin' else 'indigo' %}
+{% set theme_color = 'blue' if current_user.role == 'Admin' else 'violet' if current_user.role == 'HR' else 'teal' %}
 
 <body class="font-sans bg-gray-50">
 
@@ -90,6 +90,20 @@
                         <span class="flex-1 ms-3 whitespace-nowrap">Candidates</span>
                     </a>
                 </li>
+                {% if current_user.role == 'Admin' %}
+                <li>
+                    <a href="{{ url_for('main.audit_logs') }}"
+                        class="nav-link border-none flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-{{ theme_color }}-600"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Audit Logs</span>
+                    </a>
+                </li>
+                {% endif %}
                 <li>
                     <a href="#"
                         class="nav-link border-none flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group opacity-50 cursor-not-allowed">

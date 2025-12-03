@@ -72,6 +72,11 @@ def populate():
                 status=random.choice(statuses)
             )
             db.session.add(cand)
+            
+            # Create User for Candidate
+            user = User(username=cand.email, role='Applicant', candidate=cand)
+            user.set_password('password123')
+            db.session.add(user)
         
         # Create Users
         admin = User(username='admin', role='Admin')

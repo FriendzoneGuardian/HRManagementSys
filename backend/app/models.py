@@ -43,5 +43,14 @@ class Candidate(db.Model):
     department_id = db.Column(db.Integer, db.ForeignKey('department.id'))
     user = db.relationship('User', backref='candidate', uselist=False)
     
+class AuditLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    action = db.Column(db.String(64), nullable=False)
+    details = db.Column(db.String(256))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    user = db.relationship('User', backref=db.backref('audit_logs', lazy=True))
+
     def __repr__(self):
-        return f'<Candidate {self.first_name} {self.last_name}>'
+        return f'<AuditLog {self.action} by User {self.user_id}>'

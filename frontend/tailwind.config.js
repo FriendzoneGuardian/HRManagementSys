@@ -7,8 +7,8 @@ module.exports = {
     ],
     safelist: [
         {
-            pattern: /(bg|text)-(blue|indigo)-(50|100|600|700|800)/,
-            variants: ['hover', 'focus'],
+            pattern: /(bg|text|border|ring)-(blue|indigo|violet|teal)-(50|100|200|300|600|700|800)/,
+            variants: ['hover', 'focus', 'group-hover'],
         }
     ],
     theme: {

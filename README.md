@@ -6,8 +6,6 @@
 
 Project Horus is a modernized Recruitment Management System (RMS) designed to demonstrate an academically grounded yet forward‑oriented system architecture. Unlike production-grade corporate HR suites, Project Horus focuses on the hiring lifecycle, modularity, clarity, and demonstrability — allowing instructors to easily evaluate the system’s structure, logic, and technical implementation.
 
-This project is fully **independent** and not part of SwiftSynapse Labs or SwiftGrade.
-
 ---
 
 ## 🚀 Current Development Phase

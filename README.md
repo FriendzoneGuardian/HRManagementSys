@@ -89,20 +89,22 @@ venv\Scripts\activate      # Windows
 pip install -r requirements.txt
 ```
 
-### 4. Initialize Tailwind
+### 4. Run the Application (Auto-Setup)
+
+You can simply double-click **`run_setup.bat`** (Windows) or run:
 
 ```bash
-cd frontend
-npm install
-npm run build
-```
-
-### 5. Run Flask
-
-```bash
-# From the root directory
 python backend/run.py
 ```
+
+**What happens next?**
+1.  The system will automatically connect to your local MySQL server (default XAMPP settings).
+2.  It will create the database `hr_management_sys` if it doesn't exist.
+3.  It will create all necessary tables.
+4.  It will create default accounts:
+    *   **Admin**: `admin` / `admin123`
+    *   **HR**: `hr` / `hr123`
+5.  The server will start at `http://127.0.0.1:5000`.
 
 ---
 

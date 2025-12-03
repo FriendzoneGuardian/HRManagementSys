@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - HR Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
+            <span class="text-indigo-600 font-bold text-3xl mr-2">HR</span> Manager
+        </a>
+        <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                    Create an account
+                </h1>
+
+                <form class="space-y-4 md:space-y-6" action="{{ url_for('auth.register') }}" method="POST">
+                    {{ form.hidden_tag() }}
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">First
+                                Name</label>
+                            {{ form.first_name(class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm
+                            rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5",
+                            placeholder="John") }}
+                            {% for error in form.first_name.errors %}
+                            <span class="text-red-600 text-sm">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        <div>
+                            <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900">Last
+                                Name</label>
+                            {{ form.last_name(class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm
+                            rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5",
+                            placeholder="Doe") }}
+                            {% for error in form.last_name.errors %}
+                            <span class="text-red-600 text-sm">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Email Address</label>
+                        {{ form.username(class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                        focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5",
+                        placeholder="name@example.com") }}
+                        {% for error in form.username.errors %}
+                        <span class="text-red-600 text-sm">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        <label for="role" class="block mb-2 text-sm font-medium text-gray-900">I am a...</label>
+                        {{ form.role(class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                        focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5") }}
+                        {% for error in form.role.errors %}
+                        <span class="text-red-600 text-sm">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                        {{ form.password(class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                        focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5", placeholder="••••••••") }}
+                        {% for error in form.password.errors %}
+                        <span class="text-red-600 text-sm">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900">Confirm
+                            Password</label>
+                        {{ form.confirm_password(class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm
+                        rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5",
+                        placeholder="••••••••") }}
+                        {% for error in form.confirm_password.errors %}
+                        <span class="text-red-600 text-sm">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    {{ form.submit(class="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4
+                    focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center",
+                    value="Create Account") }}
+
+                    <p class="text-sm font-light text-gray-500">
+                        Already have an account? <a href="{{ url_for('auth.login') }}"
+                            class="font-medium text-indigo-600 hover:underline">Login here</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

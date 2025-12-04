@@ -15,7 +15,35 @@ Unlike production-grade corporate HR suites, Clarion focuses on the hiring lifec
 
 ## 🚀 Current Development Phase
 
-We have completed **Phase 6** (Applicant Module & System Hardening). The system now includes a full Applicant lifecycle, from registration and document upload to admin approval and status tracking.
+> [!IMPORTANT]
+> **Core Functionalities Complete** (Phase 8.6)
+> The system is now fully operational as a Recruitment & HR Management System.
+
+We have successfully implemented:
+*   **Job Management**: Posting, Editing, and Deleting Jobs.
+*   **Applicant Lifecycle**: Registration, Application, Status Tracking, and Document Upload.
+*   **HR Administration**: Candidate Management, Filtering, and Approval Workflows.
+*   **Role-Based Access**: Distinct portals for Admin, HR, and Applicants.
+
+---
+
+## 🔮 Future Roadmap (TBD)
+
+While the core system is complete, the following features are planned for future "DLC" updates:
+*   **Email Notifications**: Automated emails for status changes.
+*   **Interview Scheduling**: Calendar integration for setting up interviews.
+*   **Analytics Dashboard**: Visual charts for hiring metrics.
+*   **Profile Picture Upload**: Allow users to upload avatars.
+
+---
+
+## 🤖 AI Disclaimer
+
+> [!NOTE]
+> **Vibe Coded**
+> This project was **100% AI-Generated** using advanced agentic coding workflows.
+> Every line of code, documentation, and design decision was crafted by an AI Assistant (Antigravity) in collaboration with the user.
+> *No humans were harmed (or coded) in the making of this software.*
 
 ---
 
@@ -89,20 +117,40 @@ venv\Scripts\activate      # Windows
 pip install -r requirements.txt
 ```
 
-### 4. Initialize Tailwind
+### 4. Run the Application (Auto-Setup)
+
+You can simply double-click **`run_setup.bat`** (Windows) or run:
 
 ```bash
-cd frontend
-npm install
-npm run build
-```
-
-### 5. Run Flask
-
-```bash
-# From the root directory
 python backend/run.py
 ```
+
+**What happens next?**
+1.  The system will automatically connect to your local MySQL server (default XAMPP settings).
+2.  It will create the database `hr_management_sys` if it doesn't exist.
+3.  It will create all necessary tables.
+4.  It will create default accounts:
+    *   **Admin**: `admin` / `admin123`
+    *   **HR**: `hr` / `hr123`
+5.  The server will start at `http://127.0.0.1:5000`.
+
+### 5. Fresh Install (First Time Setup)
+
+If you are running this on a newly installed PC, ensure you have the following prerequisites:
+1.  **Python 3.10+**: [Download Here](https://www.python.org/downloads/) (Check "Add Python to PATH" during installation).
+2.  **XAMPP (or MySQL Server)**: [Download Here](https://www.apachefriends.org/index.html) (Start Apache and MySQL modules).
+3.  **Git**: [Download Here](https://git-scm.com/downloads).
+
+Once installed, follow the standard installation steps above.
+
+---
+
+## ⚠️ Known Limitations
+
+> [!WARNING]
+> **Desktop Optimized**
+> This application is currently optimized for **Desktop (1920x1080)** resolutions.
+> Mobile and Tablet functionality is **experimental** and may experience layout issues. Please use a PC for the best experience.
 
 ---
 

@@ -209,3 +209,4 @@ __marimo__/
 # Database Dumps and Conversion Scripts
 *.sql
 convert_dump.py
+DEVELOPER_NOTES.md

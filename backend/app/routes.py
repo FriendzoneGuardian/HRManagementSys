@@ -1,6 +1,22 @@
+"""
+Clarion HRMS - Main Routes
+==========================
+Purpose:
+    Handles core application logic for Admin and HR roles.
+    Includes Dashboard, Candidate Management, Job Management, and Approvals.
+
+Key Routes:
+    - /dashboard: Main overview.
+    - /candidates: CRUD for candidates.
+    - /jobs: CRUD for job postings.
+    - /approvals: Admin approval for new accounts.
+
+Author: Antigravity AI
+"""
+
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from app.models import Candidate, Department, AuditLog, User
+from app.models import Candidate, Department, AuditLog, User, JobPosting
 from app import db
 from sqlalchemy import func
 from datetime import datetime
@@ -27,14 +43,34 @@ def dashboard():
                            recent_candidates=recent_candidates,
                            avg_salary=avg_salary)
 
-from app.forms import CandidateForm
+from app.forms import CandidateForm, JobForm
 
 from app.utils import log_user_action
 
 @bp.route('/candidates', methods=['GET'])
 @login_required
 def candidates():
-    candidates = Candidate.query.order_by(Candidate.application_date.desc()).all()
+    search_query = request.args.get('search', '')
+    department_filter = request.args.get('department', '')
+    status_filter = request.args.get('status', '')
+
+    query = Candidate.query
+
+    if search_query:
+        query = query.filter(
+            (Candidate.first_name.ilike(f'%{search_query}%')) |
+            (Candidate.last_name.ilike(f'%{search_query}%')) |
+            (Candidate.email.ilike(f'%{search_query}%')) |
+            (Candidate.position.ilike(f'%{search_query}%'))
+        )
+    
+    if department_filter:
+        query = query.filter(Candidate.department_id == department_filter)
+    
+    if status_filter:
+        query = query.filter(Candidate.status == status_filter)
+
+    candidates = query.order_by(Candidate.application_date.desc()).all()
     departments = Department.query.all()
     form = CandidateForm()
     return render_template('candidates.html', candidates=candidates, departments=departments, form=form)
@@ -156,3 +192,93 @@ def approvals():
             
     pending_users = User.query.filter_by(is_approved=False).all()
     return render_template('approvals.html', users=pending_users)
+
+@bp.route('/jobs', methods=['GET'])
+@login_required
+def jobs():
+    if current_user.role not in ['Admin', 'HR']:
+        flash('Permission denied.', 'error')
+        return redirect(url_for('main.dashboard'))
+        
+    jobs = JobPosting.query.order_by(JobPosting.posted_date.desc()).all()
+    departments = Department.query.all()
+    form = JobForm()
+    return render_template('jobs.html', jobs=jobs, departments=departments, form=form)
+
+@bp.route('/jobs/add', methods=['POST'])
+@login_required
+def add_job():
+    if current_user.role not in ['Admin', 'HR']:
+        flash('Permission denied.', 'error')
+        return redirect(url_for('main.dashboard'))
+        
+    form = JobForm()
+    if form.validate_on_submit():
+        try:
+            department = Department.query.get(form.department.data)
+            new_job = JobPosting(
+                title=form.title.data,
+                department=department,
+                requirements=form.requirements.data,
+                status=form.status.data,
+                posted_date=datetime.now()
+            )
+            db.session.add(new_job)
+            db.session.commit()
+            log_user_action('ADD_JOB', f"Posted job {new_job.title}")
+            flash('Job posted successfully!', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error posting job: {str(e)}', 'error')
+    else:
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(f"Error in {getattr(form, field).label.text}: {error}", 'error')
+                
+    return redirect(url_for('main.jobs'))
+
+@bp.route('/jobs/<int:id>/edit', methods=['POST'])
+@login_required
+def edit_job(id):
+    if current_user.role not in ['Admin', 'HR']:
+        flash('Permission denied.', 'error')
+        return redirect(url_for('main.dashboard'))
+        
+    job = JobPosting.query.get_or_404(id)
+    form = JobForm()
+    
+    if form.validate_on_submit():
+        try:
+            job.title = form.title.data
+            job.department = Department.query.get(form.department.data)
+            job.requirements = form.requirements.data
+            job.status = form.status.data
+            
+            db.session.commit()
+            log_user_action('EDIT_JOB', f"Edited job {job.title}")
+            flash('Job updated successfully!', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error updating job: {str(e)}', 'error')
+            
+    return redirect(url_for('main.jobs'))
+
+@bp.route('/jobs/<int:id>/delete', methods=['POST'])
+@login_required
+def delete_job(id):
+    if current_user.role not in ['Admin', 'HR']:
+        flash('Permission denied.', 'error')
+        return redirect(url_for('main.dashboard'))
+        
+    job = JobPosting.query.get_or_404(id)
+    try:
+        title = job.title
+        db.session.delete(job)
+        db.session.commit()
+        log_user_action('DELETE_JOB', f"Deleted job {title}")
+        flash('Job deleted successfully!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error deleting job: {str(e)}', 'error')
+        
+    return redirect(url_for('main.jobs'))

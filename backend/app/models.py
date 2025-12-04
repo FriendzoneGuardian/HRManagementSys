@@ -1,3 +1,20 @@
+"""
+Clarion HRMS - Database Models
+==============================
+Purpose:
+    Defines the database schema using SQLAlchemy ORM.
+    Contains all entity definitions and relationships.
+
+Key Models:
+    - User: Authentication and Role management (Admin, HR, Applicant).
+    - Candidate: Applicant profile data (linked to User).
+    - Department: Organizational units.
+    - JobPosting: Job listings managed by HR.
+    - AuditLog: System activity tracking.
+
+Author: Antigravity AI
+"""
+
 from app import db, login
 from datetime import datetime
 from flask_login import UserMixin

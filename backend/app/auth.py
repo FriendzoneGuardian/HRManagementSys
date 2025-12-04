@@ -1,3 +1,18 @@
+"""
+Clarion HRMS - Authentication Routes
+====================================
+Purpose:
+    Manages user session lifecycle: Login, Registration, and Logout.
+    Handles user creation and initial role assignment.
+
+Key Routes:
+    - /login: User sign-in.
+    - /register: New account creation (Applicant/HR/Admin).
+    - /logout: Session termination.
+
+Author: Antigravity AI
+"""
+
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, current_user
 from urllib.parse import urlparse

@@ -1,3 +1,19 @@
+"""
+Clarion HRMS - Forms
+====================
+Purpose:
+    Defines Flask-WTF forms for data validation and CSRF protection.
+    Used across Login, Registration, and CRUD operations.
+
+Key Forms:
+    - LoginForm: User authentication.
+    - RegistrationForm: New user signup.
+    - CandidateForm: Candidate data entry.
+    - JobForm: Job posting creation/editing.
+
+Author: Antigravity AI
+"""
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, FloatField
 from wtforms.validators import DataRequired, Email, Length, ValidationError, EqualTo
@@ -41,3 +57,14 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user:
             raise ValidationError('That email is already in use. Please choose a different one.')
+
+class JobForm(FlaskForm):
+    title = StringField('Job Title', validators=[DataRequired(), Length(max=100)])
+    department = SelectField('Department', coerce=int, validators=[DataRequired()])
+    requirements = StringField('Requirements', validators=[DataRequired()]) # Using StringField for simplicity, could be TextArea
+    status = SelectField('Status', choices=[('Open', 'Open'), ('Closed', 'Closed')], default='Open')
+    submit = SubmitField('Post Job')
+
+    def __init__(self, *args, **kwargs):
+        super(JobForm, self).__init__(*args, **kwargs)
+        self.department.choices = [(d.id, d.name) for d in Department.query.all()]

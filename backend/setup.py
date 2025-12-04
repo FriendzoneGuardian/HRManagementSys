@@ -51,14 +51,44 @@ def setup_database():
             print("[*] Initializing schema...")
             db.create_all()
             
-            # 3. Default Departments
-            departments = ['HR', 'Engineering', 'Sales', 'Marketing', 'Finance']
+            # 3. Default Departments (Hybrid IT-Accounting Template)
+            departments = ['IT Solutions', 'Accounting & Finance', 'HR & Admin', 'Sales & Growth']
+            dept_objects = {}
             for dept_name in departments:
-                if not Department.query.filter_by(name=dept_name).first():
-                    db.session.add(Department(name=dept_name))
+                dept = Department.query.filter_by(name=dept_name).first()
+                if not dept:
+                    dept = Department(name=dept_name)
+                    db.session.add(dept)
                     print(f"    + Created Department: {dept_name}")
+                dept_objects[dept_name] = dept
             
-            # 4. Default Users (Admin & HR)
+            db.session.commit() # Commit to get IDs
+
+            # 4. Sample Jobs (Template Data)
+            # We need to re-fetch departments to ensure they are attached to the session
+            from app.models import JobPosting
+            
+            sample_jobs = [
+                ('Senior Full Stack Developer', 'IT Solutions', '5+ years Python, React, AWS. Leadership experience required.'),
+                ('System Administrator', 'IT Solutions', 'Linux, Windows Server, Azure, Networking.'),
+                ('IT Support Specialist', 'IT Solutions', 'Helpdesk support, hardware troubleshooting, customer service.'),
+                ('Forensic Accountant', 'Accounting & Finance', 'CPA, Fraud detection, Audit experience.'),
+                ('Payroll Specialist', 'Accounting & Finance', 'ADP, Payroll processing, Tax compliance.'),
+                ('Tax Consultant', 'Accounting & Finance', 'Corporate tax planning, IRS regulations.'),
+                ('HR Manager', 'HR & Admin', 'Employee relations, Policy development, Recruitment strategy.'),
+                ('Recruitment Specialist', 'HR & Admin', 'Sourcing, Interviewing, ATS management.'),
+                ('Enterprise Sales Rep', 'Sales & Growth', 'B2B sales, CRM experience, Negotiation skills.'),
+                ('Growth Marketer', 'Sales & Growth', 'SEO, SEM, Content Marketing, Analytics.')
+            ]
+
+            for title, dept_name, reqs in sample_jobs:
+                dept = Department.query.filter_by(name=dept_name).first()
+                if dept and not JobPosting.query.filter_by(title=title).first():
+                    job = JobPosting(title=title, department=dept, requirements=reqs, status='Open')
+                    db.session.add(job)
+                    print(f"    + Created Job: {title}")
+
+            # 5. Default Users (Admin & HR)
             # Admin
             if not User.query.filter_by(username='admin').first():
                 admin = User(username='admin', role='Admin', is_approved=True)

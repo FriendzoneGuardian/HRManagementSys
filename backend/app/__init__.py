@@ -32,5 +32,10 @@ def create_app(config_class=Config):
     
     from app.applicant import bp as applicant_bp
     app.register_blueprint(applicant_bp, url_prefix='/applicant')
+    
+    @app.context_processor
+    def inject_now():
+        from datetime import datetime
+        return {'now': datetime.now}
 
     return app

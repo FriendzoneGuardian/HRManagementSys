@@ -1,3 +1,19 @@
+"""
+Clarion HRMS - Forms
+====================
+Purpose:
+    Defines Flask-WTF forms for data validation and CSRF protection.
+    Used across Login, Registration, and CRUD operations.
+
+Key Forms:
+    - LoginForm: User authentication.
+    - RegistrationForm: New user signup.
+    - CandidateForm: Candidate data entry.
+    - JobForm: Job posting creation/editing.
+
+Author: Antigravity AI
+"""
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, FloatField
 from wtforms.validators import DataRequired, Email, Length, ValidationError, EqualTo

@@ -1,3 +1,24 @@
+"""
+Clarion HRMS - Setup Script
+===========================
+Purpose:
+    Initializes the database, creates schema, and seeds default data.
+    Acts as the "Installer" for the application.
+
+Actions:
+    1. Connects to MySQL (XAMPP default).
+    2. Creates database 'hr_management_sys' if missing.
+    3. Creates all tables.
+    4. Seeds Departments (IT, Finance, HR, Sales).
+    5. Seeds Default Users (Admin, HR).
+    6. Seeds Sample Jobs.
+
+Usage:
+    python backend/setup.py
+
+Author: Antigravity AI
+"""
+
 import os
 import sys
 import pymysql

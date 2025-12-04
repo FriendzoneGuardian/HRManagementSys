@@ -1,3 +1,19 @@
+"""
+Clarion HRMS - Main Routes
+==========================
+Purpose:
+    Handles core application logic for Admin and HR roles.
+    Includes Dashboard, Candidate Management, Job Management, and Approvals.
+
+Key Routes:
+    - /dashboard: Main overview.
+    - /candidates: CRUD for candidates.
+    - /jobs: CRUD for job postings.
+    - /approvals: Admin approval for new accounts.
+
+Author: Antigravity AI
+"""
+
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from app.models import Candidate, Department, AuditLog, User, JobPosting

@@ -1,4 +1,20 @@
 
+"""
+Clarion HRMS - Application Factory
+==================================
+Purpose:
+    Initializes the Flask application, configures extensions (SQLAlchemy, Migrate, Login, CSRF),
+    and registers blueprints.
+
+Key Components:
+    - create_app(): Factory function to create Flask app instance.
+    - db: SQLAlchemy instance.
+    - login: LoginManager instance.
+    - csrf: CSRFProtect instance.
+
+Author: Antigravity AI
+"""
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
